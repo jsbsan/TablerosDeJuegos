@@ -1,0 +1,11 @@
+# Gambas Project File 3.0
+Title=Tablero
+Startup=FMain
+Icon=tablero de juegos.png
+Version=0.0.1
+Component=gb.image
+Component=gb.gui.qt
+Component=gb.form
+TabSize=4
+Language=en_US
+Packager=1

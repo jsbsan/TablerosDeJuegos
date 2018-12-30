@@ -1,0 +1,68 @@
+' Gambas class file
+
+Public ruta As String
+
+Property escala As Integer
+
+Private hescala As Integer
+
+Private hpicturebox As PictureBox
+Private spx As Integer
+Private spy As Integer
+Private hcontenedor As DrawingArea
+
+Private winicial As Integer
+Private hinicial As Integer
+
+Public Sub _new(nombre As String, contenedor As DrawingArea, valorescala As Integer)
+
+    Me.ruta = nombre
+
+    Me.escala = 10
+
+    With hpicturebox = New PictureBox(contenedor) As "ObFich"
+        .Picture = Picture.Load(nombre)
+        .x = 0
+        .y = 0
+        .w = .Picture.w
+        .h = .Picture.h
+    End With
+
+    hcontenedor = contenedor
+
+    winicial = hpicturebox.w
+    hinicial = hpicturebox.h
+
+    hpicturebox.Stretch = True
+    Me.escala = valorescala
+
+End
+
+Public Sub ObFich_MouseDown()
+
+    spx = Mouse.X
+    spy = Mouse.Y
+
+End
+
+Public Sub ObFich_MouseMove()
+
+    hpicturebox.X = hpicturebox.X + Mouse.X - spx
+    hpicturebox.Y = hpicturebox.Y + Mouse.Y - spy
+
+End
+
+Private Function escala_Read() As Integer
+
+    Return hescala
+
+End
+
+Private Sub escala_Write(Value As Integer)
+
+    hescala = Value
+
+    Try hpicturebox.w = winicial * hescala / 5
+    Try hpicturebox.h = hinicial * hescala / 5
+
+End

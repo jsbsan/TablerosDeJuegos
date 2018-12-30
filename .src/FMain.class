@@ -1,0 +1,97 @@
+' Gambas class file
+
+Public listaFichas As New Ficha[]
+
+Public hImg As Image
+Public escala As Integer
+
+Public Sub Form_Open()
+
+    SliderBox1.Value = 4
+    ButtonFondo_Click()
+
+End
+
+Public Sub DrawingAreaTablero_Draw()
+
+    Dim f As Ficha
+
+    Dim hBrush As PaintBrush
+
+    With Paint
+        'dibuja fondo
+        .Brush = Paint.Color(Color.green)
+        .Rectangle(0, 0, DrawingAreaTablero.w, DrawingAreaTablero.H)
+        .Fill
+        'dibuja tablero
+        If Not IsNull(himg) Then
+            hBrush = Paint.Image(himg, 0, 0)
+            Paint.Scale(escala / 10, escala / 10)
+            Paint.Brush = hBrush
+            Paint.Rectangle(0, 0, himg.w, himg.h)
+            Paint.Fill
+        Endif
+
+    End With
+
+End
+
+Public Sub ButtonFondo_Click()
+
+    himg = Image.load("ImagenTablero.jpg")
+    DrawingAreaTablero.Refresh()
+
+End
+
+Public Sub SliderBox1_Change()
+
+    escala = SliderBox1.Value
+    DrawingAreaTablero.Refresh()
+
+End
+
+Public Sub ButtonAgregarFicha_Click()
+
+    'añadir un hbox y dentro de ella el boton de elegir imagen y escala
+    'y un pequeño boton con + para añadirlo al tablero
+    ' Dim htmp As New HBox(VBoxLateral)
+    ' Dim botonImagen As New Button(htmp) As "botonFigura"
+    ' Dim botonPlus As New Button(htmp) As "agregar"
+    '
+    ' htmp.w = 140
+    ' htmp.h = 35
+    '
+    ' botonImagen.w = 56
+    ' botonImagen.h = 28
+
+End
+
+Public Sub ButtonAgregaBlanca_Click()
+
+    Dim ftmp As Ficha
+
+    ftmp = New Ficha("peonBlanco.png", DrawingAreaTablero, SliderBoxFichas.value)
+
+    listaFichas.Add(ftmp)
+
+End
+
+Public Sub SliderBoxFichas_Change()
+
+    Dim ftmp As Ficha
+
+    For Each ftmp In listaFichas
+        ftmp.escala = SliderBoxFichas.value
+    Next
+
+End
+
+Public Sub ButtonFichaNegra_Click()
+
+    Dim ftmp As Ficha
+
+    ftmp = New Ficha("peonNegro.png", DrawingAreaTablero, SliderBoxFichas.value)
+
+    listaFichas.Add(ftmp)
+
+End
